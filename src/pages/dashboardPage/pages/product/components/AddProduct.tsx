@@ -117,7 +117,7 @@ const AddProduct = () => {
 
           </div>
 
-          <SheetFooter className="pt-4 border-t border-slate-100 bg-white">
+          <SheetFooter className="pt-4 border-t border-slate-100 ">
             <Button type="submit" className="cursor-pointer bg-blue-700 hover:bg-blue-800 text-white">Save changes</Button>
             <SheetClose asChild>
               <Button type="button" variant="outline" className="cursor-pointer">Close</Button>
