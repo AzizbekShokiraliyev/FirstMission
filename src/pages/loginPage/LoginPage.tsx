@@ -108,7 +108,7 @@ const LoginPage = ({className, ...props}: React.ComponentProps<"div">) => {
 
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center p-4">
+    <div className="flex min-h-screen w-full items-center justify-center ">
         <div className={cn("flex flex-col gap-6 w-full max-w-xl", className)} {...props}>
       <Card className="flex w-full max-w-xl rounded-[2rem] shadow-2xl overflow-hidden min-h-[380px]">
         <CardHeader>
