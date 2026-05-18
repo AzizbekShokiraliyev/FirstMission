@@ -39,17 +39,15 @@ type RegisterValues = z.infer<typeof registerScheme>
 
 const LoginPage = ({className, ...props}: React.ComponentProps<"div">) => {
     const [showPassword, setShowPassword] = useState(false) 
-    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const {register, handleSubmit, formState: {errors}} = useForm<RegisterValues>({
+    const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<RegisterValues>({
         resolver: zodResolver(registerScheme),
         defaultValues: { email: "", password: "" }
       })
 
     const onSubmit = async (data: RegisterValues) => {
-      setIsLoading(true)
 
       try{
         const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password)
@@ -85,8 +83,6 @@ const LoginPage = ({className, ...props}: React.ComponentProps<"div">) => {
           break;
       }
       alert(errorMessage);
-      }finally{
-        setIsLoading(false)
       }
     }  
 
@@ -153,14 +149,14 @@ const LoginPage = ({className, ...props}: React.ComponentProps<"div">) => {
                 />
                 {errors.password && <p className="text-red-500 text-[10px]">{errors.password.message}</p>}
                 <InputGroupAddon align="inline-end">
-                <Button type="button" variant={'ghost'} onClick={() => setShowPassword(!showPassword)} className="text-slate-400 cursor-pointer hover:text-slate-600 transition-colors focus:outline-none" >
-                    {showPassword ? <EyeIcon size={18}/> : <EyeOffIcon size={18}/>}
+                <Button size={"icon-xs"} type="button" variant={'ghost'} onClick={() => setShowPassword(!showPassword)} className="text-slate-400 cursor-pointer hover:text-slate-600 transition-colors focus:outline-none" >
+                    {showPassword ? <EyeIcon /> : <EyeOffIcon/>}
                 </Button>
                 </InputGroupAddon>
             </InputGroup>
               </Field>
               <Field className="mt-3 mb-3">
-                <Button type="submit" className="cursor-pointer" disabled={isLoading}>Login</Button>
+                <Button type="submit" className="cursor-pointer" disabled={isSubmitting}>Login</Button>
                 <Button variant="outline" className="cursor-pointer" type="button" onClick={handleGoogleLogin}>
                   Login with Google
                 </Button>

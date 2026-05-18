@@ -1,18 +1,22 @@
-import { Route, Routes } from "react-router-dom"
-import RoutesLanding from "./pages/landingPage/RoutesLanding"
-import LoginPage from "./pages/loginPage/LoginPage"
-import RegisterPage from "./pages/registerPage/RegisterPage"
-import DashboardPage from "./pages/dashboardPage/DashboradPage"
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/routes.tsx"; // Tepada tuzgan routes.tsx faylingiz yo'li
+import { TooltipProvider } from "./components/ui/tooltip.tsx";
+import { store } from './store/store.ts';
+import { Provider } from "react-redux";
+import { ThemeProvider } from "@/components/theme-provider.tsx";
 
 const App = () => {
   return (
-      <Routes>
-        <Route path="/" element={<RoutesLanding/>}/>
-        <Route path="/login" element={<LoginPage/>}/>
-        <Route path="/register" element={<RegisterPage/>}/>
-        <Route path="/dashboard" element={<DashboardPage/>}/>
-      </Routes>
-  )
-}
+    <Provider store={store}>
+      <TooltipProvider>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          
+          <RouterProvider router={router} />
 
-export default App
+        </ThemeProvider>
+      </TooltipProvider>
+    </Provider>
+  );
+};
+
+export default App;
