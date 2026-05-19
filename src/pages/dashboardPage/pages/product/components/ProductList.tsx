@@ -189,7 +189,7 @@ const ProductList = () => {
   return (
     <Card className="bg-slate-950 border-slate-800 w-full p-6 border rounded-xl transition-colors space-y-6">
       <Table>
-        <TableHeader>
+        <TableHeader className="hover:bg-slate-800">
           <TableRow className="border-b border-slate-800/30">
             <TableHead className="text-slate-200 font-semibold w-[60px]">Id</TableHead>
             <TableHead className="text-slate-200 font-semibold w-[180px]">Product</TableHead>
@@ -304,14 +304,3 @@ const ProductList = () => {
 };
 
 export default ProductList;
-
-
-
-
-
-
-
-
-
-
-

@@ -27,7 +27,7 @@ const Filter = () => {
         </Button>
       </DropdownMenuTrigger>  
 
-      <DropdownMenuContent align="start" onClick={() => handleSort("high-to-low")} className={`cursor-pointer w-57 ${sortBy === "high-to-low" ? "bg-slate-100 font-semibold" : ""}`}>
+      <DropdownMenuContent align="start" onClick={() => handleSort("high-to-low")} className={`cursor-pointer w-57 ${sortBy === "high-to-low" ? "bg-slate-100" : ""}`}>
         <DropdownMenuGroup>
           <DropdownMenuLabel>Filter</DropdownMenuLabel>
           <DropdownMenuItem>

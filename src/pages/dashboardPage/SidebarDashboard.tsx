@@ -42,7 +42,7 @@ const SidebarDashboard = () => {
     <Sidebar variant="sidebar" className="!bg-[#0B0E14] border-r border-slate-900/60 text-white" style={{ "--sidebar-background": "#0B0E14" } as React.CSSProperties}>
         <SidebarHeader className="!bg-[#0B0E14]">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-500/30">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm shadow-blue-500/30">
           P
           </div>
           <div>
@@ -55,7 +55,7 @@ const SidebarDashboard = () => {
 
         <SidebarContent className="!bg-[#0B0E14]">
             <SidebarGroup>
-                <SidebarGroupLabel>
+                <SidebarGroupLabel className="text-blue-500">
                     Asosiy Menu
                 </SidebarGroupLabel>
             </SidebarGroup>
