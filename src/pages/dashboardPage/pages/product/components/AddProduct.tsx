@@ -99,7 +99,7 @@ const AddProduct = () => {
                     variant="ghost"  
                     className={`cursor-pointer flex-1 rounded-full border
                       ${selectedStatus?.toLowerCase() === item.title?.toLowerCase()
-                        ? "bg-white text-secondary-foreground border-transparent"
+                        ? "bg-white text-black border-transparent"
                         : "border-muted-foreground/40 hover:border-muted-foreground text-white" 
                       }`}
                     onClick={() => setSelectedStatus(item.title)}
