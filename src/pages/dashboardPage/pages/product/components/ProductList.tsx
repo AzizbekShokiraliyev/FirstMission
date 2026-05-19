@@ -269,7 +269,7 @@ const ProductList = () => {
               {Array.from({ length: totalPages }, (_, index) => {
                 const pageNumber = index + 1;
                 return (
-                  <PaginationItem key={pageNumber}>
+                  <PaginationItem key={pageNumber} className="text-white">
                     <PaginationLink
                       href="#"
                       isActive={currentPage === pageNumber}
