@@ -70,7 +70,7 @@ function SheetContent({
           <SheetPrimitive.Close data-slot="sheet-close" asChild>
             <Button
               variant="ghost"
-              className="absolute top-3 right-3 bg-white cursor-pointer"
+              className="absolute top-3 right-3 bg-white cursor-pointer text-black"
               size="icon-sm"
             >
               <XIcon

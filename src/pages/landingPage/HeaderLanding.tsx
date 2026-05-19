@@ -32,6 +32,7 @@ const HeaderLanding = () => {
           <span className="text-xl font-bold tracking-tight">ProDev</span>
         </Link>
 
+
         <div className="flex items-center gap-2 sm:gap-4">
           <Button 
             variant="ghost" 
@@ -50,7 +51,6 @@ const HeaderLanding = () => {
             <Link to="/register">Register</Link>
           </Button>
         </div>
-
       </div>
     </header>
   )

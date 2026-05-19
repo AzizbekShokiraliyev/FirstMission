@@ -55,7 +55,7 @@ const AddProduct = () => {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen} >
       <SheetTrigger asChild>
-        <Button className="bg-blue-700 hover:bg-blue-800 h-11 px-4 font-semibold rounded-xl flex items-center gap-2 transition-colors cursor-pointer">
+        <Button className="bg-blue-700 hover:bg-blue-800 text-white h-11 px-4 font-semibold rounded-xl flex items-center gap-2 transition-colors cursor-pointer">
           <Plus /> Yangi mahsulot
         </Button>
       </SheetTrigger>

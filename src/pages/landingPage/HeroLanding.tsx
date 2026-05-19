@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react" // Ikonkalar uchun
 
 const HeroLanding = () => {
   return (
-    <section className="relative overflow-hidden pt-44 pb-20 lg:pt-56 lg:pb-32">
+    <section className="relative overflow-hidden pt-44 pb-20 lg:pt-56 lg:pb-32 h-full">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl mb-6 bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60">
           Dasturlash dunyosini <br />
