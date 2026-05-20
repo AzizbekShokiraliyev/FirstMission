@@ -47,18 +47,16 @@ type RegisterValues = z.infer<typeof registerScheme>
 
 const RegisterPage = ({ ...props }: React.ComponentProps<typeof Card>) => {
     const [showPassword, setShowPassword] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     
-    const {register, handleSubmit, formState: {errors}} = useForm<RegisterValues>({
+    const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<RegisterValues>({
       resolver: zodResolver(registerScheme),
-      defaultValues: { name: "", email: "", password: "" }
+      defaultValues: { name: "", email: "", password: "", confirmPassword: "" }
     })
 
     const onSubmit = async (data: RegisterValues) => {
-      setIsLoading(true)
-
       try{
         const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password)
         const user = userCredential.user
@@ -87,8 +85,6 @@ const RegisterPage = ({ ...props }: React.ComponentProps<typeof Card>) => {
       } else {
         alert("Xatolik yuz berdi: " + error)
       }
-      }finally {
-       setIsLoading(false)
       }
     }
 
@@ -187,7 +183,7 @@ const RegisterPage = ({ ...props }: React.ComponentProps<typeof Card>) => {
             </Field>
             <FieldGroup className="mt-5">
               <Field> 
-                <Button type="submit" className="cursor-pointer" disabled={isLoading}>Create Account</Button>
+                <Button type="submit" className="cursor-pointer" disabled={isSubmitting}>Create Account</Button>
                 <Button variant="outline" type="button" className="cursor-pointer" onClick={handleGoogleLogin}>
                   Sign up with Google
                 </Button>

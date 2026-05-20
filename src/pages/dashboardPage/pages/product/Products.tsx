@@ -5,21 +5,44 @@ import Search from "./components/Search";
 import Filter from "./components/Filter";
 import AddProduct from "./components/AddProduct";
 import ProductList from "./components/ProductList";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 
 
 
 interface ProductInfo{
   title: string,
-  count: string,
+  count: string | number,
   icon: LucideIcon,
 }
 
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  count: number;
+  status: string; 
+  price: number | string;
+}
+
 const Products = () => {
+
+  const AllProducts = useSelector((state: RootState) => state.product.allProducts)
+
+  const count = AllProducts.length
+  const activeCount = AllProducts.filter(
+  (item: unknown) => (item as Product).status === "active" || (item as Product).status === "low-stock").length;
+
   const productInfo: ProductInfo[] = [
-    {title: "Jami mahsulotlar", count: "1,240", icon: Package,},
-    {title: "Bugungi sotuv", count: "12", icon: ShoppingBag,},
-    {title: "Faol sotuvda", count: "1,180", icon: CircleCheckBig,},
+    {title: "Jami mahsulotlar", count: count, icon: Package,},
+    {title: "Bugungi sotuv", count: "0", icon: ShoppingBag,},
+    {title: "Faol sotuvda", count: activeCount, icon: CircleCheckBig,},
   ]
+
+  useEffect(() => {
+    
+  })
 
   return (
     <div className="space-y-6 animate-fade-in text-white w-full">

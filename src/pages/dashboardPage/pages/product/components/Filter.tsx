@@ -9,16 +9,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from '@/store/store'
+import { setSortBy } from '@/store/productSlice'
 
 const Filter = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [sortBy, setSortBy] = useState<string>("")
+  const dispatch = useDispatch()
+  const sortBy = useSelector((state: RootState) => state.product.sortBy)
 
   const handleSort = (type: string) => {
-    setSortBy(type)
-    console.log("Saralash turi:", type) 
+    dispatch(setSortBy(type)) 
     setIsOpen(false) 
   }
+
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
@@ -27,13 +31,13 @@ const Filter = () => {
         </Button>
       </DropdownMenuTrigger>  
 
-      <DropdownMenuContent align="start" onClick={() => handleSort("high-to-low")} className={`cursor-pointer w-57 ${sortBy === "high-to-low" ? "bg-slate-100" : ""}`}>
+      <DropdownMenuContent align="start" className={`cursor-pointer w-57 ${sortBy === "high-to-low" ? "bg-slate-100" : ""}`}>
         <DropdownMenuGroup>
           <DropdownMenuLabel>Filter</DropdownMenuLabel>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleSort("high-to-low")} >
             Eng qimmat mahsulotlar
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleSort("low-to-high")}>
             Eng arzon mahsulotlar
           </DropdownMenuItem>
         </DropdownMenuGroup>

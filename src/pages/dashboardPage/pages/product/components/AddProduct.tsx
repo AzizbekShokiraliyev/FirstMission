@@ -16,12 +16,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { createProduct } from '@/lib/productApi'
+import { triggerRefresh } from '@/store/productSlice'
+import { useDispatch } from 'react-redux'
 
 const productSchema = z.object({
   name: z.string().min(1, { message: "Mahsulot nomi majburiy" }),
   description: z.string().min(1, { message: "Tavsif majburiy" }),
-  count: z.string().min(1, { message: "Soni majburiy" }),
-  price: z.string().min(1, { message: "Narxi majburiy" }),
+  count: z.string()
+    .min(1, { message: "Soni majburiy" })
+    .refine((val) => !isNaN(Number(val)) && Number(val) >= 0, { message: "To'g'ri son kiriting" }),
+  price: z.string()
+    .min(1, { message: "Narxi majburiy" })
+    .refine((val) => !isNaN(Number(val)) && Number(val) >= 0, { message: "To'g'ri narx kiriting" }),
 })
 type ProductFormValues = z.infer<typeof productSchema>;
 
@@ -33,8 +40,9 @@ const AddProduct = () => {
     { title: "low-stock" },
     { title: "draft" }
   ]
+  const dispatch = useDispatch()
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ProductFormValues>({
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       name: "",
@@ -44,12 +52,35 @@ const AddProduct = () => {
     }
   })
 
-  const onSubmit = (data: ProductFormValues) => {
-    const finalData = { ...data, status: selectedStatus };
-    console.log("Jo'natilgan ma'lumotlar:", finalData);
-    
-    reset(); 
-    setIsOpen(false); 
+  const onSubmit = async (data: ProductFormValues) => {
+    const timestamp = new Date().getTime(); 
+    const customId = `prod_${timestamp}`;
+
+    const finalDate = {
+      ...data,
+      status: selectedStatus,
+      price: Number(data.price),
+      count: Number(data.count),
+    };
+
+    try {
+      const success = await createProduct(customId, finalDate)
+
+      if (success) {
+        alert("Mahsulot muvaffaqiyatli qo'shildi!"); 
+        reset(); 
+        setSelectedStatus("active"); 
+        setIsOpen(false);
+      }else {
+        alert("Mahsulotni saqlashda xatolik yuz berdi.");
+      }
+
+    } catch (error) {
+      console.error("Xatolik:", error);
+    }
+
+    dispatch(triggerRefresh());
+
   }
 
   return (
@@ -119,7 +150,7 @@ const AddProduct = () => {
           </div>
 
           <SheetFooter className="pt-4 border-t border-slate-800 ">
-            <Button type="submit" className="cursor-pointer bg-blue-700 hover:bg-blue-800 text-white">Save changes</Button>
+            <Button type="submit" className="cursor-pointer bg-blue-700 hover:bg-blue-800 text-white" disabled={isSubmitting}>Save changes</Button>
             <SheetClose asChild>
               <Button type="button" variant="outline" className="cursor-pointer">Close</Button>
             </SheetClose>
