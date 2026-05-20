@@ -114,7 +114,7 @@ const ProductList = () => {
             <TableHead className="text-slate-200 font-semibold w-[100px]">Price</TableHead>
             <TableHead className="text-slate-200 font-semibold w-[80px] text-right">Actions</TableHead>
           </TableRow>
-        </TableHeader>
+        </TableHeader>  
 
         <TableBody>
         {currentItems.length === 0 ? (
