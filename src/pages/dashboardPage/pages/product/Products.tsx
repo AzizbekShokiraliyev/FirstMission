@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { CircleCheckBig, Package, ShoppingBag, type LucideIcon } from 'lucide-react';
+import { CircleCheckBig, Package, ShoppingBag } from 'lucide-react';
 
 import Search from "./components/Search";
 import Filter from "./components/Filter";
@@ -10,14 +10,6 @@ import type { RootState } from "@/store/store";
 import { setAllProducts } from "@/store/productSlice";
 import { useEffect } from "react";
 import { useGetProductsQuery } from "@/store/apiSlice";
-
-
-
-interface productInfo{
-  title: string,
-  count: string | number,
-  icon: LucideIcon,
-}
 
 interface Product {
   id: string;
