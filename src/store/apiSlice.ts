@@ -1,7 +1,7 @@
 // apiSlice.ts
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { db } from "@/lib/fireBase";
-import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc, where, query } from "firebase/firestore";
 
 interface Product {
   id: string;
@@ -168,8 +168,31 @@ export const apiSlice = createApi({
     },
     providesTags: ["Products"],
   }),
+
+
+   getDraftProducts: builder.query<Product[], void>({
+    async queryFn() {
+      try {
+        const q = query(collection(db, "products"), where("status", "==", "draft"));
+        
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map((doc) => {
+          const productData = doc.data() as Product; 
+          return {
+            ...productData,
+            id: doc.id,
+          };
+        });
+        
+        return { data };
+      } catch (error) {
+        return { error: { message: "Draftlarni olishda xatolik", error } };
+      }},
+    providesTags: ["Products"],
+    }),
   }),
 });
+
 
 export const {
   useGetProductsQuery,
@@ -181,4 +204,5 @@ export const {
   useGetUsersCountQuery,
   useGetWeeklyStatsQuery,
   useGetTodaySalesListQuery,
+  useGetDraftProductsQuery,
 } = apiSlice;

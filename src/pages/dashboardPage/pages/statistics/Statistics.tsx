@@ -12,12 +12,13 @@ interface StatItem {
 }
 
 const Statistics = () => {
-
+  
   const statistika: StatItem[] = [
   { title: "Kunlik odam kirdi", count: "1,700", desc: "Bugungi jonli tashriflar", icon: Users },
   { title: "1 kunda sotildi", count: "74", desc: "Oxirgi 24 soat ichida", icon: ShoppingBag },
   { title: "Omborda bor", count: "445", desc: "Barcha jami qoldiqlar", icon: TrendingUp },
-  { title: "Haftada sotildi", count: "1,318", desc: "Oxirgi 7 kunlik jami", icon: Calendar },
+  { title: "Haftada sotildi", count: "1,318", desc: "Oxirgi 7 kunlik jami", icon: Calendar }
+
 ]
 
   return (

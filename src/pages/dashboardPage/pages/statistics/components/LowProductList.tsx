@@ -1,28 +1,15 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useGetDraftProductsQuery } from "@/store/apiSlice";
 import { AlertCircle} from "lucide-react"
-
-interface AllProducts {
-  id: string, 
-  title: string, 
-  count: number, 
-  price: string
-}
 
 const LowProductList = () => {
 
-    const allProducts: AllProducts[] = [
-    { id: "P001", title: "iPhone 15 Pro Max", count: 450, price: "$1,199" },
-    { id: "P002", title: "MacBook Air M3", count: 8, price: "$1,299" },     
-    { id: "P003", title: "AirPods Pro 2", count: 718, price: "$249" },
-    { id: "P004", title: "Apple Watch Series 9", count: 3, price: "$399" },  
-    { id: "P005", title: "iPad Pro M4", count: 5, price: "$999" },           
-    { id: "P006", title: "Apple Pencil Pro", count: 120, price: "$129" },
-    { id: "P007", title: "Magic Keyboard", count: 14, price: "$299" },
-    ];
+  const { data: draftProducts = [], isLoading } = useGetDraftProductsQuery();
+  if (isLoading) return <div>Yuklanmoqda...</div>;
 
-    const criticalLowStockProducts = allProducts.filter(item => item.count < 10);
+    const criticalLowStockProducts = draftProducts.filter(item => item.count < 10);
 
   return (
     <Card className="bg-slate-950 p-5">
@@ -42,7 +29,6 @@ const LowProductList = () => {
       <Table>
         <TableHeader>
           <TableRow className="border-b border-slate-800/30 bg-slate-900/10">
-            <TableHead className="text-slate-400 font-semibold w-[100px]">Id</TableHead>
             <TableHead className="text-slate-400 font-semibold">Product</TableHead>
             <TableHead className="text-slate-400 font-semibold">Price</TableHead>
             <TableHead className="text-slate-400 font-semibold">Residual</TableHead>
@@ -58,10 +44,9 @@ const LowProductList = () => {
                 </TableCell>
               </TableRow>
             ) : (
-              criticalLowStockProducts.map((item) => (
+              draftProducts.map((item) => (
                 <TableRow key={item.id} className="border-b border-slate-800/20 hover:bg-slate-900/10 text-white h-14 transition-colors">
-                  <TableCell className="font-mono text-slate-500 text-xs">{item.id}</TableCell>
-                  <TableCell className="font-medium text-slate-200">{item.title}</TableCell>
+                  <TableCell className="font-medium text-slate-200">{item.name}</TableCell>
                   <TableCell className="text-slate-300 font-medium">{item.price}</TableCell>
                   
                   <TableCell className="font-extrabold text-amber-400">
