@@ -21,13 +21,12 @@ const Statistics = () => {
 ]
 
   return (
-    <div className="w-full space-y-6 text-white animate-fade-in p-1">
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 w-full">
+    <div className="w-full space-y-6">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {statistika.map((item, idx) => {
         const IconComponent = item.icon
-        
         return (
-          <Card key={idx} className="bg-slate-900/50 backdrop-blur-md border-slate-800/60 shadow-xl shadow-black/20 transition-all duration-300 group rounded-2xl text-white">
+          <Card key={idx} className="bg-slate-900/50 text-white">
             <CardContent className='p-6 flex items-center justify-between gap-4'>
               <div className="space-y-1">
                 <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{item.title}</h4>
@@ -35,7 +34,7 @@ const Statistics = () => {
                 <p className="text-xs text-slate-500">{item.desc}</p>
               </div>
               
-              <div className="p-3 bg-slate-800/50 border border-slate-700/30 rounded-xl text-blue-400 shrink-0">
+              <div className="p-3 bg-slate-800/50 border border-slate-700 rounded-xl text-blue-400">
                 <IconComponent size={22} />
               </div>
             </CardContent>

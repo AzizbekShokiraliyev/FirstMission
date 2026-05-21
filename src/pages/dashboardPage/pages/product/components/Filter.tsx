@@ -26,7 +26,7 @@ const Filter = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button className="cursor-pointer bg-slate-800 w-14 h-12 rounded-xl text-white">
+        <Button className="bg-slate-800 w-14 h-12 rounded-xl text-white">
             <span><Funnel/></span>
         </Button>
       </DropdownMenuTrigger>  

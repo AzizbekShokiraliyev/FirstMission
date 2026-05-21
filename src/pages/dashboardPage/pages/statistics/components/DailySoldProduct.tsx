@@ -20,7 +20,7 @@ const DailySoldProduct = () => {
     ];
 
   return (
-    <Card className="bg-slate-950 backdrop-blue-md border-slate-800 rounded-2xl p-5">
+    <Card className="bg-slate-950 p-5">
         <div className="pb-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">Kunlik Sotilgan Mahsulotlar</h3>
         </div>

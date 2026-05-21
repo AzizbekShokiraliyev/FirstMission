@@ -1,8 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { MoreHorizontalIcon } from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -13,7 +15,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"; 
+} from "@/components/ui/table";
 import {
   Pagination,
   PaginationContent,
@@ -21,203 +23,189 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination" 
+} from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MoreHorizontalIcon } from "lucide-react";
-import type { RootState } from "../../../../../store/store";
-import { useEffect, useState } from "react";
-import { getAllProducts } from "@/lib/productApi";
-import { setAllProducts } from "@/store/productSlice";
+
+import Edit from "./Edit";
+import Delete from "./Delete";
+import { useGetProductsQuery } from "@/store/apiSlice";
+import type { RootState } from "@/store/store";
 
 interface Product {
   id: string;
-  name: string; 
+  name: string;
   description: string;
   count: number;
   status: string;
-  price: number | string; 
+  price: number | string;
 }
 
 const ProductList = () => {
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+  } = useGetProductsQuery(undefined);
+
+  // Redux state
   const searchQuery = useSelector((state: RootState) => state.product.searchQuery);
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const itemsPerPage = 10
-  const [products, setProducts] = useState<Product[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const refreshTrigger = useSelector((state: RootState) => state.product.refreshTrigger);
-  const sortBy = useSelector((state: RootState) => state.product.sortBy)
-  const dispatch = useDispatch()
+  const sortBy = useSelector((state: RootState) => state.product.sortBy);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      setIsLoading(true)
-      const data = await getAllProducts()
-      setProducts(data as Product[])
-      dispatch(setAllProducts(data as unknown[]))
-      setIsLoading(false)
-    }
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 10;
 
-    fetchProduct()
-  }, [refreshTrigger, dispatch])
-  
-  const filteredProducts = products.filter((product) =>
-    (product.name || "").toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const sortedProducts = useMemo(() => {
+    const filtered = products.filter((p: Product) =>
+      (p.name || "").toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
+    return [...filtered].sort((a, b) => {
+      const priceA = parseFloat(String(a.price || 0).replace(/[^0-9.]/g, "")) || 0;
+      const priceB = parseFloat(String(b.price || 0).replace(/[^0-9.]/g, "")) || 0;
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    const priceA = typeof a.price === "number" ? a.price : parseFloat(String(a.price).replace(/[^0-9.]/g, "")) || 0;
-    const priceB = typeof b.price === "number" ? b.price : parseFloat(String(b.price).replace(/[^0-9.]/g, "")) || 0;
-
-    if (sortBy === "high-to-low") {
-    return priceB - priceA; 
-    }
-    if (sortBy === "low-to-high") {
-      return priceA - priceB; 
-    }
-    return 0;
-  })
-
-
-  useEffect(() => {
-  const timeoutId = setTimeout(() => {
-    setCurrentPage(1);
-  }, 0);
-
-  return () => clearTimeout(timeoutId); 
-}, [searchQuery]);
+      if (sortBy === "high-to-low") return priceB - priceA;
+      if (sortBy === "low-to-high") return priceA - priceB;
+      return 0;
+    });
+  }, [products, searchQuery, sortBy]);
 
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
-  
-  if(isLoading){
-    return(
-      <Card className="bg-slate-950 border-slate-800 w-full p-6 text-center text-slate-400">
-        Ma'lumotlar yuklanmoqda...
+  const currentItems = sortedProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  if (isLoading) {
+    return (
+      <Card className="bg-slate-950 p-6 text-center text-slate-400">
+        Ma&apos;lumotlar yuklanmoqda...
       </Card>
-    )
+    );
+  }
+
+  if (isError) {
+    return (
+      <Card className="bg-slate-950 p-6 text-center text-red-400">
+        Xatolik yuz berdi!
+      </Card>
+    );
   }
 
   return (
-    <Card className="bg-slate-950 border-slate-800 w-full p-6 border rounded-xl transition-colors space-y-6">
+    <Card className="bg-slate-950 p-6">
       <Table>
-        <TableHeader className="hover:bg-slate-800">
-          <TableRow className="border-b border-slate-800/30">
-            <TableHead className="text-slate-200 font-semibold w-[60px]">Id</TableHead>
-            <TableHead className="text-slate-200 font-semibold w-[180px]">Product</TableHead>
-            <TableHead className="text-slate-200 font-semibold">Description</TableHead>
-            <TableHead className="text-slate-200 font-semibold w-[100px]">Count</TableHead>
-            <TableHead className="text-slate-200 font-semibold w-[120px]">Status</TableHead>
-            <TableHead className="text-slate-200 font-semibold w-[100px]">Price</TableHead>
-            <TableHead className="text-slate-200 font-semibold w-[80px] text-right">Actions</TableHead>
+        <TableHeader>
+          <TableRow className="border-b border-slate-800/30 text-white">
+            <TableHead>ID</TableHead>
+            <TableHead>Product</TableHead>
+            <TableHead>Description</TableHead>
+            <TableHead>Count</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Price</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
-        </TableHeader>  
+        </TableHeader>
 
         <TableBody>
-        {currentItems.length === 0 ? (
-          <TableRow>
-            <TableCell colSpan={7} className="text-center py-8 text-slate-500">
-              Mahsulot topilmadi.
-            </TableCell>
-          </TableRow>
-        ) : (
-          currentItems.map((item, idx) => {
-            const orderNumber = (currentPage - 1) * itemsPerPage + idx + 1;
-            
-            return (
-              <TableRow key={item.id} className="border-b border-slate-800/60 hover:bg-slate-900/20 text-slate-300 h-14">
-                <TableCell className="font-mono text-xs text-slate-400">{orderNumber}</TableCell>
-                
-                <TableCell className="font-semibold text-white">{item.name}</TableCell>
-                <TableCell className="text-slate-400 max-w-[300px] truncate">{item.description}</TableCell>
+          {currentItems.length > 0 ? (
+            currentItems.map((item: Product, idx: number) => (
+              <TableRow
+                key={item.id}
+                className="border-b border-slate-800/60 text-slate-300 hover:bg-slate-900/20"
+              >
+                <TableCell>
+                  {(currentPage - 1) * itemsPerPage + idx + 1}
+                </TableCell>
+                <TableCell className="font-semibold text-white">
+                  {item.name}
+                </TableCell>
+                <TableCell className="max-w-[200px] truncate text-slate-400">
+                  {item.description}
+                </TableCell>
                 <TableCell>{item.count} ta</TableCell>
                 <TableCell>
-                  <span className={`
-                    flex items-center justify-center px-2.5 py-0.5 rounded-full text-[11px] font-bold border w-20 h-6
-                    ${item.status === "active" ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400" : 
-                      item.status === "low-stock" ? "border-amber-500/30 bg-amber-500/10 text-amber-400" : 
-                      "border-rose-800 bg-rose-900 text-white"
-                    }
-                  `}>
+                  <span
+                    className={`rounded-full border px-2 py-1 text-[11px] font-bold ${
+                      item.status === "active"
+                        ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
+                        : "border-rose-500/30 bg-rose-500/10 text-rose-400"
+                    }`}
+                  >
                     {item.status}
                   </span>
                 </TableCell>
-                <TableCell className="text-emerald-400 font-medium">{item.price}</TableCell>
-
+                <TableCell className="text-emerald-400">{item.price}</TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-900 cursor-pointer">
+                      <Button variant="ghost" size="icon">
                         <MoreHorizontalIcon size={16} />
-                        <span className="sr-only">Open menu</span>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="bg-slate-900 border-slate-800 text-slate-200">
-                      <DropdownMenuItem className="cursor-pointer focus:bg-slate-800 focus:text-white">Edit</DropdownMenuItem>
-                      <DropdownMenuSeparator className="bg-slate-800" />
-                      <DropdownMenuItem variant="destructive" className="cursor-pointer">
-                        Delete
-                      </DropdownMenuItem>
+                    <DropdownMenuContent
+                      align="end"
+                      className="border border-slate-800 bg-slate-900"
+                    >
+                      <Edit />
+                      <DropdownMenuSeparator />
+                      <Delete />
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            );
-          }) 
-        )}
-      </TableBody>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell
+                colSpan={7}
+                className="py-6 text-center text-slate-400"
+              >
+                Product topilmadi
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
       </Table>
 
       {totalPages > 1 && (
-        <div className="pt-2 border-slate-900 text-white">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious 
-                  href="#" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (currentPage > 1) setCurrentPage(currentPage - 1);
-                  }}
-                  className={currentPage === 1 ? "pointer-events-none opacity-40" : "cursor-pointer"}
-                />
-              </PaginationItem>
+        <Pagination className="mt-6">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                className={`cursor-pointer text-white ${
+                  currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                }`}
+              />
+            </PaginationItem>
 
-              {Array.from({ length: totalPages }, (_, index) => {
-                const pageNumber = index + 1;
-                return (
-                  <PaginationItem key={pageNumber} className="text-white">
-                    <PaginationLink
-                      href="#"
-                      isActive={currentPage === pageNumber}
-                        onClick={(e) => {
-                        e.preventDefault();
-                        setCurrentPage(pageNumber);
-                      }}
-                      className={`cursor-pointer ${currentPage === pageNumber ? "text-black bg-white" : "text-slate-400"}`}
-                    >
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })}
-
-              <PaginationItem>
-                <PaginationNext 
-                  href="#" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-                  }}
-                  className={currentPage === totalPages ? "pointer-events-none opacity-40" : "cursor-pointer"}
-                />
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  isActive={currentPage === page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`cursor-pointer ${currentPage === page ? "text-black" : "text-white"}`}
+                >
+                  {page}
+                </PaginationLink>
               </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
+            ))}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                }
+                className={`cursor-pointer text-white ${
+                  currentPage === totalPages
+                    ? "pointer-events-none opacity-50"
+                    : "text-white"
+                }`}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       )}
     </Card>
   );

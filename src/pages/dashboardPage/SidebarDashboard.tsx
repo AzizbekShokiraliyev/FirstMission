@@ -39,14 +39,14 @@ const SidebarDashboard = () => {
 
 
   return (
-    <Sidebar variant="sidebar" className="!bg-[#0B0E14] border-r border-slate-900/60 text-white" style={{ "--sidebar-background": "#0B0E14" } as React.CSSProperties}>
+    <Sidebar variant="sidebar" className="border-r border-slate-800" style={{ "--sidebar-background": "#0B0E14" } as React.CSSProperties}>
         <SidebarHeader className="!bg-[#0B0E14]">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm shadow-blue-500/30">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600">
           P
           </div>
           <div>
-            <h2 className="text-sm font-black tracking-wider text-white uppercase flex items-center">
+            <h2 className="font-black text-white uppercase flex items-center">
               Pro<span className="text-blue-500">Dev</span>
             </h2>
           </div>
@@ -86,12 +86,12 @@ const SidebarDashboard = () => {
         </SidebarGroupContent>
         </SidebarContent>
 
-         <SidebarFooter className="p-4 border-t border-slate-900/50 !bg-[#0B0E14]">
+         <SidebarFooter className="p-4 border-t border-slate-700/70 !bg-[#0B0E14]">
         <SidebarMenu>
           <SidebarMenuItem>
            <Link to='/login'>
                <SidebarMenuButton
-              className="w-full flex items-center gap-3 px-3 py-6 text-red-500 hover:bg-red-950/20 hover:text-red-400 rounded-xl transition-colors font-bold text-xs tracking-wider cursor-pointer"
+              className="items-center gap-3 px-3 py-6 text-red-500 hover:bg-red-950/20 hover:text-red-400 rounded-xl font-bold text-xs tracking-wider cursor-pointer"
             >
               <LogOut className="h-5 w-5" />
               <span>TIZIMDAN CHIQISH</span>

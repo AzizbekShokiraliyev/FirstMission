@@ -110,7 +110,7 @@ const LoginPage = ({className, ...props}: React.ComponentProps<"div">) => {
   return (
     <div className="flex min-h-screen w-full items-center justify-center ">
         <div className={cn("flex flex-col gap-6 w-full max-w-xl", className)} {...props}>
-      <Card className="flex w-full max-w-xl rounded-[2rem] shadow-2xl overflow-hidden min-h-[380px]">
+      <Card className="flex w-full max-w-xl">
         <CardHeader>
           <CardTitle className="flex items-center justify-center">Login to your account</CardTitle>
           <CardDescription className="flex items-center justify-center">
@@ -149,15 +149,15 @@ const LoginPage = ({className, ...props}: React.ComponentProps<"div">) => {
                 />
                 {errors.password && <p className="text-red-500 text-[10px]">{errors.password.message}</p>}
                 <InputGroupAddon align="inline-end">
-                <Button size={"icon-xs"} type="button" variant={'ghost'} onClick={() => setShowPassword(!showPassword)} className="text-slate-400 cursor-pointer hover:text-slate-600 transition-colors focus:outline-none" >
+                <Button size={"icon-xs"} type="button" variant={'ghost'} onClick={() => setShowPassword(!showPassword)} >
                     {showPassword ? <EyeIcon /> : <EyeOffIcon/>}
                 </Button>
                 </InputGroupAddon>
             </InputGroup>
               </Field>
               <Field className="mt-3 mb-3">
-                <Button type="submit" className="cursor-pointer" disabled={isSubmitting}>Login</Button>
-                <Button variant="outline" className="cursor-pointer" type="button" onClick={handleGoogleLogin}>
+                <Button type="submit" disabled={isSubmitting}>Login</Button>
+                <Button variant="outline" type="button" onClick={handleGoogleLogin}>
                   Login with Google
                 </Button>
                 <FieldDescription className="text-center">

@@ -47,7 +47,7 @@ type RegisterValues = z.infer<typeof registerScheme>
 
 const RegisterPage = ({ ...props }: React.ComponentProps<typeof Card>) => {
     const [showPassword, setShowPassword] = useState(false)
-    // const [isLoading, setIsLoading] = useState(false)
+    const [showResetPass , setShowResetPass] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     
@@ -110,7 +110,7 @@ const RegisterPage = ({ ...props }: React.ComponentProps<typeof Card>) => {
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
-        <Card {...props} className="flex w-full max-w-xl rounded-[2rem] shadow-2xl overflow-hidden min-h-[560px]">
+        <Card {...props} className="flex w-full max-w-xl">
       <CardHeader>
         <CardTitle className="flex items-center justify-center">Create an account</CardTitle>
         <CardDescription className="flex items-center justify-center">
@@ -150,9 +150,8 @@ const RegisterPage = ({ ...props }: React.ComponentProps<typeof Card>) => {
                     type="button"
                     variant={'ghost'}
                     onClick={() => setShowPassword(!showPassword)}
-                    className="text-slate-400 hover:text-slate-600 transition-colors focus:outline-none cursor-pointer"
                     >
-                    {showPassword ? <EyeIcon size={18} /> : <EyeOffIcon size={18} />}
+                    {showPassword ? <EyeIcon/> : <EyeOffIcon/>}
                 </Button>
                 </InputGroupAddon>
             </InputGroup>
@@ -173,18 +172,16 @@ const RegisterPage = ({ ...props }: React.ComponentProps<typeof Card>) => {
                 <Button
                     type="button"
                     variant={'ghost'}
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="text-slate-400 hover:text-slate-600 transition-colors focus:outline-none cursor-pointer"
-                    >
-                    {showPassword ? <EyeIcon size={18} /> : <EyeOffIcon size={18} />}
+                    onClick={() => setShowResetPass(!showResetPass)}                    >
+                    {showResetPass ? <EyeIcon/> : <EyeOffIcon/>}
                 </Button>
                 </InputGroupAddon>
             </InputGroup>
             </Field>
             <FieldGroup className="mt-5">
               <Field> 
-                <Button type="submit" className="cursor-pointer" disabled={isSubmitting}>Create Account</Button>
-                <Button variant="outline" type="button" className="cursor-pointer" onClick={handleGoogleLogin}>
+                <Button type="submit" disabled={isSubmitting}>Create Account</Button>
+                <Button variant="outline" type="button" onClick={handleGoogleLogin}>
                   Sign up with Google
                 </Button>
                 <FieldDescription className="pt-4 text-center">

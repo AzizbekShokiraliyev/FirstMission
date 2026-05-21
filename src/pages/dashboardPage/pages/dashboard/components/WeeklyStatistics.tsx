@@ -1,7 +1,5 @@
 import { AreaChart, Area, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowUpRight } from 'lucide-react'
 
 interface ChartData{
     name: string,
@@ -21,15 +19,12 @@ const chartData: ChartData[] = [
  ]
 
   return (
-    <Card className='lg:col-span-2 bg-slate-950 backdrop-blur-md border-slate-900/60 p-6 rounded-2xl flex flex-col justify-between min-h-[350px] shadow-xl shadow-black/20'>
+    <Card className='lg:col-span-2 bg-slate-950 p-6'>
                 <CardHeader className="p-0 mb-6 flex flex-row items-center justify-between space-y-0">
                     <div>
                         <CardTitle className="text-sm font-black tracking-wider uppercase text-slate-200">Tizim Statistikasi</CardTitle>
                         <CardDescription className="text-xs text-slate-400 mt-1">Haftalik amallar dinamikasi</CardDescription>
                     </div>
-                    <Button className="text-xs text-blue-500 font-bold flex items-center gap-1 hover:underline cursor-pointer bg-transparent border-none">
-                        Batafsil <ArrowUpRight className="h-3 w-3" />
-                    </Button>
                 </CardHeader>
 
 

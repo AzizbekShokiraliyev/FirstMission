@@ -25,16 +25,16 @@ const LowProductList = () => {
     const criticalLowStockProducts = allProducts.filter(item => item.count < 10);
 
   return (
-    <Card className="bg-slate-950 backdrop-blue-md border-slate-800 rounded-2xl p-5 text-white">
+    <Card className="bg-slate-950 p-5">
       <CardHeader className="bg-slate-900 border-b border-slate-800 px-5 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2">
           <AlertCircle className="text-rose-400 w-5 h-5 animate-pulse"/>
           <div>
-            <CardTitle className="text-base font-bold text-rose-400">Omborda kam qolgan mahsulotlar (Kritik holat)</CardTitle>
+            <CardTitle className="text-base font-bold text-rose-400 pt-4">Omborda kam qolgan mahsulotlar (Kritik holat)</CardTitle>
             <p className="text-[11px] text-slate-400 mt-0.5">Soni zudlik bilan 10 donadan kam qolgan barcha mahsulotlar avtomatik filtri</p>
           </div>
         </div>
-        <Badge variant="destructive" className="rounded-lg px-2.5 py-0.5 font-bold text-xs bg-red-500/20 text-red-400 border border-500/30">
+        <Badge variant="destructive" className="px-2.5 py-0.5 font-bold">
           {criticalLowStockProducts.length} ta kritik mahsulot
         </Badge>
       </CardHeader>

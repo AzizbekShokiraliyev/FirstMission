@@ -18,8 +18,8 @@ const LastSalesPage = () => {
   ]
 
   return (
-   <Card className="bg-slate-950 backdrop-blur-md border-slate-800 p-6 rounded-2xl flex flex-col shadow-xl shadow-black/20">
-      <CardHeader className="p-0 mb-4 border-b border-slate-900 pb-3 flex flex-row items-center gap-2 space-y-0">
+   <Card className="bg-slate-950 p-6">
+      <CardHeader className="p-0 mb-4 border-b border-slate-700/70 pb-3 flex flex-row items-center gap-2 space-y-0">
           <Activity className="h-4 w-4 text-blue-500" />
             <CardTitle className="text-sm font-black tracking-wider uppercase text-slate-200">So'nggi Amallar</CardTitle>
               </CardHeader>

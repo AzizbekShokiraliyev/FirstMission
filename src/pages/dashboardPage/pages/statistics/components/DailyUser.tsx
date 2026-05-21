@@ -20,9 +20,9 @@ const DailyUser = () => {
     ];
 
   return (
-    <Card className="bg-slate-950 backdrop-blue-md border-slate-800 rounded-2xl p-5">
+    <Card className="bg-slate-950 p-5">
         <div className="pb-4">
-          <h3 className="text-sm font-bold uppercase text-slate-200 trakcing-wider">Kunlik tashriflar oqimi</h3>
+          <h3 className="text-sm font-bold uppercase text-slate-200">Kunlik tashriflar oqimi</h3>
         </div>
         <div className="h-[220px] w-full">
           <ResponsiveContainer width="100%" height="100%">

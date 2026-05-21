@@ -3,7 +3,7 @@ import { router } from "./routes/routes.tsx"; // Tepada tuzgan routes.tsx faylin
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import { store } from './store/store.ts';
 import { Provider } from "react-redux";
-import { ThemeProvider } from "@/components/theme-provider.tsx";
+import { ThemeProvider } from "./components/ui/themeProvider.tsx";
 
 const App = () => {
   return (

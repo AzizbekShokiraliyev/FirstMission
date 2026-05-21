@@ -21,12 +21,12 @@ const Dashboard = () => {
   ]
     
   return (
-    <div className='space-y-6 animate-fade-in text-white w-full'>
+    <div className='space-y-6'>
         <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
             {stats.map((stat, idx) => {
               const IconComponent = stat.icon
                 return(
-                <Card key={idx} className="bg-slate-900 backdrop-blur-md border-slate-800 shadow-xl shadow-black/20 hover:border-slate-800 transition-all duration-300 group rounded-2xl">
+                <Card key={idx} className="bg-slate-900/50">
 
                 <CardContent className='p-6 flex items-center justify-between'>
                     <div className='space-y-2'>

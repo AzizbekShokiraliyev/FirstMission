@@ -20,7 +20,7 @@ const MostSelling = () => {
  ]
 
   return (
-    <Card className="bg-slate-950 backdrop-blur-md border-slate-800 p-6 rounded-2xl shadow-xl shadow-black/20">
+    <Card className="bg-slate-950">
         <CardHeader className="p-0 mb-5 flex flex-row items-center justify-between space-y-0">
           <div>
             <CardTitle className="text-sm font-black tracking-wider uppercase text-slate-200">Ommabop Mahsulotlar</CardTitle>
@@ -31,7 +31,7 @@ const MostSelling = () => {
         <CardContent className="p-0 overflow-x-auto select-none">
           <Table className="w-full text-left text-xs text-slate-300 border-collapse">
             <thead>
-              <tr className="border-b border-slate-900/80 text-slate-500 font-bold tracking-wider uppercase text-[10px]">
+              <tr className="border-b border-slate-700/70">
                 <th className="pb-3 pt-2 font-black">Mahsulot</th>
                 <th className="pb-3 pt-2 font-black">Kategoriya</th>
                 <th className="pb-3 pt-2 font-black">Narxi</th>
@@ -41,8 +41,8 @@ const MostSelling = () => {
             </thead>
             <tbody className="divide-y divide-slate-900/40">
               {topProducts.map((prod) => (
-                <tr key={prod.id} className="group hover:bg-white/[0.01] transition-all duration-200">
-                  <td className="py-3.5 font-bold text-white group-hover:text-blue-500 transition-colors">{prod.name}</td>
+                <tr key={prod.id}>
+                  <td className="py-3.5 font-bold text-white transition-colors">{prod.name}</td>
                   <td className="py-3.5 text-slate-400 font-medium">{prod.category}</td>
                   <td className="py-3.5 font-bold text-slate-200">{prod.price}</td>
                   <td className="py-3.5 font-black text-emerald-500">{prod.sales}</td>

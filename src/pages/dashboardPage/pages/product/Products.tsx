@@ -5,13 +5,15 @@ import Search from "./components/Search";
 import Filter from "./components/Filter";
 import AddProduct from "./components/AddProduct";
 import ProductList from "./components/ProductList";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
+import { setAllProducts } from "@/store/productSlice";
+import { useEffect } from "react";
+import { useGetProductsQuery } from "@/store/apiSlice";
 
 
 
-interface ProductInfo{
+interface productInfo{
   title: string,
   count: string | number,
   icon: LucideIcon,
@@ -27,22 +29,34 @@ interface Product {
 }
 
 const Products = () => {
-
-  const AllProducts = useSelector((state: RootState) => state.product.allProducts)
-
-  const count = AllProducts.length
-  const activeCount = AllProducts.filter(
-  (item: unknown) => (item as Product).status === "active" || (item as Product).status === "low-stock").length;
-
-  const productInfo: ProductInfo[] = [
-    {title: "Jami mahsulotlar", count: count, icon: Package,},
-    {title: "Bugungi sotuv", count: "0", icon: ShoppingBag,},
-    {title: "Faol sotuvda", count: activeCount, icon: CircleCheckBig,},
-  ]
+  const dispatch = useDispatch()
+  const { data: products = [] } = useGetProductsQuery();
 
   useEffect(() => {
-    
-  })
+    if (products.length > 0) {
+      dispatch(setAllProducts(products));
+    }
+  }, [products, dispatch]);
+
+  const allProducts = useSelector((state: RootState) => state.product.allProducts);
+
+  const count = allProducts.length;
+  
+  const activeCount = allProducts.filter((item: unknown): item is Product => {
+  return (
+    typeof item === 'object' &&
+    item !== null &&
+    'status' in item &&
+    ((item as Product).status === "active" || (item as Product).status === "low-stock")
+  );
+}).length;
+
+
+  const productInfo = [
+    { title: "Jami mahsulotlar", count: count, icon: Package },
+    { title: "Bugungi sotuv", count: "0", icon: ShoppingBag },
+    { title: "Faol sotuvda", count: activeCount, icon: CircleCheckBig },
+  ];
 
   return (
     <div className="space-y-6 animate-fade-in text-white w-full">
