@@ -16,7 +16,7 @@ import { useGetProductsQuery, useGetTodaySalesPriceQuery, useGetUsersCountQuery 
 const Dashboard = () => {
     const { data: products = [] } = useGetProductsQuery();
     const { data: usersCount = 0 } = useGetUsersCountQuery();
-    const { data: todaySalesCountPrice = 0 } = useGetTodaySalesPriceQuery(); // 'Price' so'zini olib tashladim
+    const { data: todaySalesCountPrice = 0 } = useGetTodaySalesPriceQuery(); 
     const count = products.length;
     
     const stats: StatItem[] = [

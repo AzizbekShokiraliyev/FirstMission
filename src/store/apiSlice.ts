@@ -1,7 +1,7 @@
 // apiSlice.ts
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { db } from "@/lib/fireBase";
-import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc, where, query } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, updateDoc, doc, where, query, getCountFromServer, Timestamp } from "firebase/firestore";
 
 interface Product {
   id: string;
@@ -135,13 +135,11 @@ export const apiSlice = createApi({
             amallar: Number(doc.data().amallar) || 0,
           }));
 
-          // 1. Haftaning kunlari tartibini belgilab olamiz
           const order = ["Dush", "Sesh", "Chor", "Pay", "Jum", "Shan", "Yak"];
           
-          // 2. Bazadan kelgan ma'lumotni shu tartibga solamiz
           const sortedData = order.map(day => {
             const found = rawData.find(item => item.name === day);
-            return found ? found : { name: day, amallar: 0 }; // Agar kun bo'lmasa, 0 qo'yamiz
+            return found ? found : { name: day, amallar: 0 }; 
           });
 
           return { data: sortedData };
@@ -190,6 +188,56 @@ export const apiSlice = createApi({
       }},
     providesTags: ["Products"],
     }),
+
+
+    getDashboardStats: builder.query<{ dailyUsers: number; dailySales: number; totalStock: number; weeklySales: number }, void>({
+      async queryFn() {
+        try {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          
+          const ordersRef = collection(db, "orders");
+          const qToday = query(ordersRef, where("createdAt", ">=", Timestamp.fromDate(today)));
+          const snapshotToday = await getCountFromServer(qToday);
+          
+          const productsRef = collection(db, "products");
+          const snapshotProducts = await getCountFromServer(productsRef);
+
+          return { 
+            data: { 
+              dailyUsers: 1700,
+              dailySales: snapshotToday.data().count, 
+              totalStock: snapshotProducts.data().count, 
+              weeklySales: 1318 
+            } 
+          };
+        } catch (error) {
+          return { error: { message: "Statistikani bazadan olishda xatolik", error} };
+        }
+      },
+      providesTags: ['Stats'],
+    }),
+
+    getVisitorStats: builder.query<{ date: string; count: number }[], void>({
+    async queryFn() {
+    try {
+      const snapshot = await getDocs(collection(db, "daily_visitors"));
+      
+      const data = snapshot.docs.map(doc => {
+        const d = doc.data();
+        return {
+          date: d.date || "Noma'lum sana", 
+          count: Number(d.count) || 0,
+        };
+      });
+
+      return { data }; 
+    } catch (error) {
+      return { error: { message: "Grafik yuklanmadi", error } };
+    }
+  },
+  providesTags: ['Stats'],
+}),
   }),
 });
 
@@ -205,4 +253,6 @@ export const {
   useGetWeeklyStatsQuery,
   useGetTodaySalesListQuery,
   useGetDraftProductsQuery,
+  useGetDashboardStatsQuery,
+  useGetVisitorStatsQuery,
 } = apiSlice;
