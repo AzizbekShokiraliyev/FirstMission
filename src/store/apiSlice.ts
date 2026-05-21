@@ -12,10 +12,15 @@ interface Product {
   price: number | string;
 }
 
+interface ChartData {
+  name: string;
+  amallar: number;
+}
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fakeBaseQuery(),
-  tagTypes: ["Products"],
+  tagTypes: ["Products", "Users", "Stats"],
   endpoints: (builder) => ({
     getProducts: builder.query<Product[], void>({
       async queryFn() {
@@ -68,6 +73,101 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Products"],
     }),
+
+   getTodaySales: builder.query<number, void>({
+      async queryFn() {
+        try {
+          const salesRef = collection(db, "todaysSales");
+          const snapshot = await getDocs(salesRef);
+          
+          const total = snapshot.docs.reduce((acc, doc) => {
+          const data = doc.data();
+          const count = Number(data.count) || 0;
+          return acc + count;
+          }, 0);
+          
+          return { data: total };
+        } catch (error) {
+          return { error: { message: "Sotuvlarni hisoblashda xatolik", error } };
+        }
+      },
+      providesTags: ["Products"], 
+    }),
+
+    getTodaySalesPrice: builder.query<number, void>({
+      async queryFn() {
+        try {
+          const salesRef = collection(db, "todaysSales");
+          const snapshot = await getDocs(salesRef);
+          
+          const total = snapshot.docs.reduce((acc, doc) => {
+          const data = doc.data();
+          const price = Number(data.price) || 0;
+          return acc + price;
+          }, 0);
+          
+          return { data: total };
+        } catch (error) {
+          return { error: { message: "Sotuvlarni hisoblashda xatolik", error } };
+        }
+      },
+      providesTags: ["Products"], 
+    }),
+
+    getUsersCount: builder.query<number, void>({
+      async queryFn() {
+        try {
+          const snapshot = await getDocs(collection(db, "users"));
+          return { data: snapshot.size }; // snapshot.size - kolleksiyadagi dokumentlar soni
+        } catch (error) {
+          return { error: { message: "Foydalanuvchilarni sanashda xatolik", error } };
+        }
+      },
+      providesTags: ["Users"]
+    }),
+
+     getWeeklyStats: builder.query<ChartData[], void>({
+      async queryFn() {
+        try {
+          const snapshot = await getDocs(collection(db, "dailyStats"));
+          const rawData = snapshot.docs.map((doc) => ({
+            name: doc.id, // Dush, Sesh...
+            amallar: Number(doc.data().amallar) || 0,
+          }));
+
+          // 1. Haftaning kunlari tartibini belgilab olamiz
+          const order = ["Dush", "Sesh", "Chor", "Pay", "Jum", "Shan", "Yak"];
+          
+          // 2. Bazadan kelgan ma'lumotni shu tartibga solamiz
+          const sortedData = order.map(day => {
+            const found = rawData.find(item => item.name === day);
+            return found ? found : { name: day, amallar: 0 }; // Agar kun bo'lmasa, 0 qo'yamiz
+          });
+
+          return { data: sortedData };
+        } catch (error) {
+          return { error: { message: "Statistikani olishda xatolik", error }};
+        }
+      },
+      providesTags: ["Stats"],
+    }),
+
+      getTodaySalesList: builder.query<{id: string, name: string, count: number}[], void>({
+      async queryFn() {
+      try {
+        const snapshot = await getDocs(collection(db, "todaysSales"));
+        const data = snapshot.docs.map(doc => ({
+          id: doc.id,
+          name: doc.data().name || "Noma'lum mahsulot",
+          count: Number(doc.data().count) || 0,
+        }));
+        return { data };
+      } catch (error) {
+        return { error: { message: "Sotuv ro'yxatini olishda xatolik", error } };
+      }
+    },
+    providesTags: ["Products"],
+  }),
   }),
 });
 
@@ -76,4 +176,9 @@ export const {
   useAddProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useGetTodaySalesQuery,
+  useGetTodaySalesPriceQuery,
+  useGetUsersCountQuery,
+  useGetWeeklyStatsQuery,
+  useGetTodaySalesListQuery,
 } = apiSlice;

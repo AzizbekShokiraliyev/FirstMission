@@ -3,6 +3,7 @@ import { LayoutDashboard, ShoppingBag, Users, type LucideIcon } from 'lucide-rea
 import WeeklyStatistics from './components/WeeklyStatistics'
 import LastSalesPage from './components/LastSalesPage'
 import MostSelling from './components/MostSelling'
+import { useGetProductsQuery, useGetTodaySalesPriceQuery, useGetUsersCountQuery } from '@/store/apiSlice'
 
  interface StatItem {
     title: string,
@@ -13,11 +14,15 @@ import MostSelling from './components/MostSelling'
  }
 
 const Dashboard = () => {
-
+    const { data: products = [] } = useGetProductsQuery();
+    const { data: usersCount = 0 } = useGetUsersCountQuery();
+    const { data: todaySalesCountPrice = 0 } = useGetTodaySalesPriceQuery(); // 'Price' so'zini olib tashladim
+    const count = products.length;
+    
     const stats: StatItem[] = [
-    { title: "Jami Savdo", value: "$24,500", change: "+12.5%", icon: LayoutDashboard, color: "text-blue-500" },
-    { title: "Mahsulotlar", value: "1,240 ta", change: "+4.2%", icon: ShoppingBag, color: "text-emerald-500" },
-    { title: "Aktiv Adminlar", value: "3 ta", change: "0%", icon: Users, color: "text-amber-500" },
+    { title: "Jami Savdo", value: `$${todaySalesCountPrice}`, change: "+12.5%", icon: LayoutDashboard, color: "text-blue-500" },
+    { title: "Mahsulotlar", value: `${count} ta`, change: "+4.2%", icon: ShoppingBag, color: "text-emerald-500" },
+    { title: "Aktiv Userlar", value: `${usersCount} ta`, change: "0%", icon: Users, color: "text-amber-500" },
   ]
     
   return (

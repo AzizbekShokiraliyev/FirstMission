@@ -1,22 +1,13 @@
 import { AreaChart, Area, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useGetWeeklyStatsQuery } from '@/store/apiSlice';
 
-interface ChartData{
-    name: string,
-    amallar: number,
-}
 
 const WeeklyStatistics = () => {
+    const { data: chartData = [], isLoading, error } = useGetWeeklyStatsQuery();
 
-const chartData: ChartData[] = [
-  { name: "Dush", amallar: 30 },
-  { name: "Sesh", amallar: 45 },
-  { name: "Chor", amallar: 35 },
-  { name: "Pay", amallar: 60 },
-  { name: "Jum", amallar: 49 },
-  { name: "Shan", amallar: 75 },
-  { name: "Yak", amallar: 55 },
- ]
+    if (isLoading) return <div className="text-white">Loading...</div>;
+    if (error) return <div className="text-red-500">Xatolik yuz berdi</div>;
 
   return (
     <Card className='lg:col-span-2 bg-slate-950 p-6'>

@@ -1,23 +1,16 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card'
 import { Table } from '@/components/ui/table'
-
-interface TopProducts {
-     id: number, 
-     name: string, 
-     category: string, 
-     price: string, 
-     sales: string, 
-     stock: string   
-}
+import { useGetProductsQuery } from '@/store/apiSlice';
 
 
 const MostSelling = () => {
+ const { data: products = [], isLoading } = useGetProductsQuery();
 
-    const topProducts: TopProducts[] = [
-    { id: 1, name: "iPhone 16 Pro Max", category: "Elektronika", price: "$1,199", sales: "142 ta", stock: "12 ta qoldi" },
-    { id: 2, name: "MacBook Pro M3 Max", category: "Noutbuklar", price: "$2,499", sales: "68 ta", stock: "5 ta qoldi" },
-    { id: 3, name: "AirPods Pro 2", category: "Aksessuarlar", price: "$249", sales: "310 ta", stock: "Sotuvda bor" },
- ]
+  const topProducts = [...products]
+    .sort((a, b) => Number(b.count || 0) - Number(a.count || 0)) 
+    .slice(0, 3);
+
+  if (isLoading) return <div className="text-white">Yuklanmoqda...</div>;
 
   return (
     <Card className="bg-slate-950">
@@ -40,24 +33,22 @@ const MostSelling = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-900/40">
-              {topProducts.map((prod) => (
-                <tr key={prod.id}>
-                  <td className="py-3.5 font-bold text-white transition-colors">{prod.name}</td>
-                  <td className="py-3.5 text-slate-400 font-medium">{prod.category}</td>
-                  <td className="py-3.5 font-bold text-slate-200">{prod.price}</td>
-                  <td className="py-3.5 font-black text-emerald-500">{prod.sales}</td>
-                  <td className="py-3.5 text-right">
-                    <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black border tracking-wide uppercase ${
-                      prod.stock.includes('qoldi') 
-                        ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' 
-                        : 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
-                    }`}>
-                      {prod.stock}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+               {topProducts.map((prod) => (
+                 <tr key={prod.id}>
+                   <td className="py-3.5 font-bold text-white">{prod.name}</td>
+                   <td className="py-3.5 text-slate-400 font-medium">{prod.description || "N/A"}</td>
+                   <td className="py-3.5 font-bold text-slate-200">${prod.price}</td>
+                   <td className="py-3.5 font-black text-emerald-500">{prod.count} ta</td>
+                   <td className="py-3.5 text-right">
+                     <span className={`px-2.5 py-1 rounded-lg ... ${
+                       prod.count < 5 ? 'bg-amber-500/10 text-amber-500' : 'bg-emerald-500/10 text-emerald-500'
+                     }`}>
+                       {prod.count > 0 ? `${prod.count} ta qoldi` : "Tugagan"}
+                     </span>
+                   </td>
+                 </tr>
+               ))}
+             </tbody>
           </Table>
         </CardContent>
       </Card>
@@ -65,3 +56,7 @@ const MostSelling = () => {
 }
 
 export default MostSelling
+
+
+
+

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
 import { setAllProducts } from "@/store/productSlice";
 import { useEffect } from "react";
-import { useGetProductsQuery } from "@/store/apiSlice";
+import { useGetProductsQuery, useGetTodaySalesQuery } from "@/store/apiSlice";
 import { Button } from "@/components/ui/button";
 
 interface Product {
@@ -31,9 +31,9 @@ const Products = () => {
   }, [products, dispatch]);
 
   const allProducts = useSelector((state: RootState) => state.product.allProducts);
+  const { data: todaySales = 0 } = useGetTodaySalesQuery();
 
   const count = allProducts.length;
-  
   const activeCount = allProducts.filter((item: unknown): item is Product => {
   return (
     typeof item === 'object' &&
@@ -46,7 +46,7 @@ const Products = () => {
 
   const productInfo = [
     { title: "Jami mahsulotlar", count: count, icon: Package },
-    { title: "Bugungi sotuv", count: "0", icon: ShoppingBag },
+    { title: "Bugungi sotuv", count: `${todaySales} `, icon: ShoppingBag },
     { title: "Faol sotuvda", count: activeCount, icon: CircleCheckBig },
   ];
 
