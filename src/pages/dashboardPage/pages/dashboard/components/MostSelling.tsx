@@ -41,8 +41,7 @@ const MostSelling = () => {
                    <td className="py-3.5 font-black text-emerald-500">{prod.count} ta</td>
                    <td className="py-3.5 text-right">
                      <span className={`px-2.5 py-1 rounded-lg ... ${
-                       prod.count < 5 ? 'bg-amber-500/10 text-amber-500' : 'bg-emerald-500/10 text-emerald-500'
-                     }`}>
+                       prod.count < 5 ? 'bg-amber-500/10 text-amber-500' : 'bg-emerald-500/10 text-emerald-500'}`}>
                        {prod.count > 0 ? `${prod.count} ta qoldi` : "Tugagan"}
                      </span>
                    </td>

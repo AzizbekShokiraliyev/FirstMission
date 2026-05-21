@@ -19,7 +19,7 @@ const HeroLanding = () => {
           <Button size="lg" className="h-12 px-8 rounded-full" asChild>
             <Link to="/register">
               Bepul boshlash
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"/>
             </Link>
           </Button>
           

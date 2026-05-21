@@ -42,9 +42,7 @@ const SidebarDashboard = () => {
     <Sidebar variant="sidebar" className="border-r border-slate-800" style={{ "--sidebar-background": "#0B0E14" } as React.CSSProperties}>
         <SidebarHeader className="!bg-[#0B0E14]">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600">
-          P
-          </div>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600">P</div>
           <div>
             <h2 className="font-black text-white uppercase flex items-center">
               Pro<span className="text-blue-500">Dev</span>
@@ -64,7 +62,6 @@ const SidebarDashboard = () => {
             <SidebarMenu>
                 {menuItems.map((item) => {
                     const isCurrentActive = location.pathname === item.url
-
                     return (
                         <SidebarMenuItem key={item.title}>
                           <SidebarMenuButton
@@ -86,13 +83,12 @@ const SidebarDashboard = () => {
         </SidebarGroupContent>
         </SidebarContent>
 
-         <SidebarFooter className="p-4 border-t border-slate-700/70 !bg-[#0B0E14]">
+        <SidebarFooter className="p-4 border-t border-slate-700/70 !bg-[#0B0E14]">
         <SidebarMenu>
           <SidebarMenuItem>
            <Link to='/login'>
                <SidebarMenuButton
-              className="items-center gap-3 px-3 py-6 text-red-500 hover:bg-red-950/20 hover:text-red-400 rounded-xl font-bold text-xs tracking-wider cursor-pointer"
-            >
+              className="items-center gap-3 px-3 py-6 text-red-500 hover:bg-red-950/20 hover:text-red-400 rounded-xl font-bold text-xs tracking-wider cursor-pointer">
               <LogOut className="h-5 w-5" />
               <span>TIZIMDAN CHIQISH</span>
             </SidebarMenuButton>
@@ -100,7 +96,6 @@ const SidebarDashboard = () => {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
-
     </Sidebar>
   )
 }

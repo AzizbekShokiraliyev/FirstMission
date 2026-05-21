@@ -9,7 +9,7 @@ const HeaderDashboard: React.FC = () => {
 
   return (
     <header className="w-full border-b border-slate-700 px-6 py-4 flex items-center justify-between">
-      
+
       <div>
         <h1 className="text-sm font-medium tracking-wide text-slate-400 uppercase">
           SALOM, <span className="font-black text-blue-500 italic">{user.name}</span>
@@ -25,9 +25,7 @@ const HeaderDashboard: React.FC = () => {
                   {user.name.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              <span className="text-[11px] font-bold text-slate-300 tracking-wider">
-                {user.name}
-              </span>
+              <span className="text-[11px] font-bold text-slate-300 tracking-wider">{user.name}</span>
             </button>
         </div>
       </div>

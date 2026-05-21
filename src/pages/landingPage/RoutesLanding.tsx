@@ -3,7 +3,7 @@ import HeroLanding from "./HeroLanding"
 
 const RoutesLanding = () => {
   return (
-    <div className="">
+    <div>
         <HeaderLanding/>
         <HeroLanding/>
     </div>

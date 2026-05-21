@@ -137,7 +137,6 @@ export const ProductForm = ({
             )}
           </div>
 
-          {/* Status */}
           <div className="grid gap-2">
             <Label className="text-white">Status</Label>
             <div className="flex w-full flex-row items-center gap-3">
@@ -159,7 +158,6 @@ export const ProductForm = ({
             </div>
           </div>
 
-          {/* Price */}
           <div className="grid gap-2">
             <Label htmlFor="price" className="text-white">
               Price
@@ -169,8 +167,7 @@ export const ProductForm = ({
               type="number"
               placeholder="Mahsulot narxi"
               className="text-white"
-              {...register("price")}
-            />
+              {...register("price")}/>
             {errors.price && (
               <p className="text-xs font-medium text-red-500">
                 {errors.price.message}
@@ -183,8 +180,7 @@ export const ProductForm = ({
           <Button
             type="submit"
             className="bg-blue-700 text-white hover:bg-blue-800"
-            disabled={isLoading}
-          >
+            disabled={isLoading}>
             {isLoading ? "Saqlanmoqda..." : "Save changes"}
           </Button>
           <SheetClose asChild>

@@ -32,7 +32,6 @@ const Dashboard = () => {
               const IconComponent = stat.icon
                 return(
                 <Card key={idx} className="bg-slate-900/50">
-
                 <CardContent className='p-6 flex items-center justify-between'>
                     <div className='space-y-2'>
                         <p className="text-xs font-bold text-slate-400 tracking-wider uppercase flex items-center gap-1.5">

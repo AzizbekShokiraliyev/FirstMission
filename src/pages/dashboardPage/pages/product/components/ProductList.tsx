@@ -1,38 +1,13 @@
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { MoreHorizontalIcon } from "lucide-react";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious,} from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Sheet } from "@/components/ui/sheet";
-
-import {
-  useDeleteProductMutation,
-  useGetProductsQuery,
-  useUpdateProductMutation,
-} from "@/store/apiSlice";
+import {useDeleteProductMutation, useGetProductsQuery, useUpdateProductMutation,} from "@/store/apiSlice";
 import type { RootState } from "@/store/store";
 import ActionDialog from "@/components/ActionDialog";
 import { toast } from "sonner";
@@ -148,7 +123,6 @@ const ProductList = () => {
       </Sheet>
 
       <Card className="bg-slate-950 p-6">
-      
         <div className="overflow-y-auto max-h-[43vh] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:]">
           <Table>
             <TableHeader className="sticky top-0 bg-slate-950 z-10">
@@ -204,9 +178,7 @@ const ProductList = () => {
                 <PaginationPrevious
                   onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
                   className={`cursor-pointer text-white ${
-                    currentPage === 1 ? "pointer-events-none opacity-50" : ""
-                  }`}
-                />
+                  currentPage === 1 ? "pointer-events-none opacity-50" : ""}`}/>
               </PaginationItem>
 
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -215,9 +187,7 @@ const ProductList = () => {
                     isActive={currentPage === page}
                     onClick={() => setCurrentPage(page)}
                     className={`cursor-pointer ${
-                      currentPage === page ? "text-black" : "text-white"
-                    }`}
-                  >
+                    currentPage === page ? "text-black" : "text-white"}`}>
                     {page}
                   </PaginationLink>
                 </PaginationItem>
@@ -226,14 +196,11 @@ const ProductList = () => {
               <PaginationItem>
                 <PaginationNext
                   onClick={() =>
-                    setCurrentPage((prev) => Math.min(totalPages, prev + 1))
-                  }
-                  className={`cursor-pointer text-white ${
+                    setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                    className={`cursor-pointer text-white ${
                     currentPage === totalPages
                       ? "pointer-events-none opacity-50"
-                      : "text-white"
-                  }`}
-                />
+                      : "text-white"}`}/>
               </PaginationItem>
             </PaginationContent>
           </Pagination>

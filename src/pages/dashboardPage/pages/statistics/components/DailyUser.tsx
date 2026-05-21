@@ -18,15 +18,13 @@ const DailyUser = () => {
           <YAxis stroke="#64748b" fontSize={12} />
           <Tooltip 
             contentStyle={{ backgroundColor: '#0f172a', border: 'none' }} 
-            itemStyle={{ color: '#fff' }}
-          />
+            itemStyle={{ color: '#fff' }}/>
           <Area 
             type="monotone" 
             dataKey="count" 
             stroke="#3b82f6" 
             fill="#1e293b" 
-            strokeWidth={2}
-          />
+            strokeWidth={2}/>
         </AreaChart>
       </ResponsiveContainer>
     </div>

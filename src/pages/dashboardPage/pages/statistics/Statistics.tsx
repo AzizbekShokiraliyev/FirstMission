@@ -8,7 +8,6 @@ const Statistics = () => {
   const { data, isLoading: isStatsLoading } = useGetDashboardStatsQuery();
   const { data: salesList, isLoading: isSalesLoading } = useGetTodaySalesListQuery();
   const totalTodaySales = (salesList || []).reduce((acc, item) => acc + item.count, 0);
-
   const isLoading = isStatsLoading || isSalesLoading;
 
   const statsData = [
@@ -44,7 +43,6 @@ const Statistics = () => {
 
       <div>
         <DailyUser />
-        {/* <DailySoldProduct /> */}
       </div>
       <LowProductList />
     </div>

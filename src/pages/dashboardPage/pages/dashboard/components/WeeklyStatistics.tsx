@@ -46,7 +46,6 @@ const WeeklyStatistics = () => {
                       </AreaChart>
                     </ResponsiveContainer>
                 </div>
-
             </Card>
   )
 }

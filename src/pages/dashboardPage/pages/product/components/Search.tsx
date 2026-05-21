@@ -31,8 +31,7 @@ const Search = () => {
                 value={text}
                 placeholder="Mahsulotlarni qidirish..." 
                 onChange={(e) => setText(e.target.value)}
-                className="bg-slate-950 border-slate-800 text-slate-100 placeholder:text-slate-500  focus-visible:ring-slate-700 focus-visible:border-slate-700 rounded-xl h-12"
-              />
+                className="bg-slate-950 border-slate-800 text-slate-100 placeholder:text-slate-500  focus-visible:ring-slate-700 focus-visible:border-slate-700 rounded-xl h-12"/>
             </FieldGroup>
           </form>
         </div>

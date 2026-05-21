@@ -1,23 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Package, ShoppingBag, CircleCheckBig, Plus } from "lucide-react";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
-
 import Search from "./components/Search";
 import Filter from "./components/Filter";
 import ProductList from "./components/ProductList";
 import { ProductForm, type ProductFormValues } from "@/components/ProductForm";
-
 import type { RootState } from "@/store/store";
 import { setAllProducts } from "@/store/productSlice";
-import {
-  useAddProductMutation,
-  useGetProductsQuery,
-  useGetTodaySalesQuery,
-} from "@/store/apiSlice";
+import {useAddProductMutation, useGetProductsQuery, useGetTodaySalesQuery,} from "@/store/apiSlice";
 import { toast } from "sonner";
 
 interface Product {
@@ -82,7 +75,6 @@ const Products = () => {
 
   return (
     <div className="space-y-6 animate-fade-in text-white w-full">
-      {/* Statistika kartalari */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {productInfo.map((item, idx) => {
           const IconComponent = item.icon;
@@ -124,9 +116,9 @@ const Products = () => {
             onSubmit={handleAddProduct}
           />
         </Sheet>
-      </div>
 
-      <ProductList />
+      </div>
+      <ProductList/>
     </div>
   );
 };

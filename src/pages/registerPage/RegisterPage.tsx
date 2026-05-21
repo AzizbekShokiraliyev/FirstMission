@@ -110,7 +110,7 @@ const RegisterPage = ({ ...props }: React.ComponentProps<typeof Card>) => {
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
-        <Card {...props} className="flex w-full max-w-xl">
+      <Card {...props} className="flex w-full max-w-xl">
       <CardHeader>
         <CardTitle className="flex items-center justify-center">Create an account</CardTitle>
         <CardDescription className="flex items-center justify-center">
@@ -159,8 +159,8 @@ const RegisterPage = ({ ...props }: React.ComponentProps<typeof Card>) => {
             <Field>
               <FieldLabel htmlFor="confirm-password">
                 Confirm Password
-              </FieldLabel>
-              <InputGroup>
+                </FieldLabel>
+                <InputGroup>
                 <InputGroupInput
                 id="inline-end-input"
                 type={showPassword ? "text" : "password"}

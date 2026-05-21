@@ -63,7 +63,7 @@ const LoginPage = ({className, ...props}: React.ComponentProps<"div">) => {
         
       }catch(error: unknown){
 
-        let errorMessage = "Email yoki parol noto'g'ri!";
+      let errorMessage = "Email yoki parol noto'g'ri!";
       
       switch (error) {
         case "auth/user-not-found":

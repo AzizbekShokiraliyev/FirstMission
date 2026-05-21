@@ -14,14 +14,12 @@ const HeaderLanding = () => {
           <span className="text-xl font-bold">ProDev</span>
         </Link>
 
-
         <div className="flex items-center gap-2">
           <Button 
             variant="ghost" 
             size="lg" 
-            asChild
-          >
-            <Link to="/login">Login</Link>
+            asChild>
+          <Link to="/login">Login</Link>
           </Button>
           
           <Button size="lg" className="rounded-full sm:px-12 sm:py-5 font-semibold" asChild>
