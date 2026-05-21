@@ -28,7 +28,7 @@ const LowProductList = () => {
 
       <Table>
         <TableHeader>
-          <TableRow className="border-b border-slate-800/30 bg-slate-900/10">
+          <TableRow className="border-b border-slate-800/30 bg-slate-900/10 hover:bg-transparent">
             <TableHead className="text-slate-400 font-semibold">Product</TableHead>
             <TableHead className="text-slate-400 font-semibold">Price</TableHead>
             <TableHead className="text-slate-400 font-semibold">Residual</TableHead>
