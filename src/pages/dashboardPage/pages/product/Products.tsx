@@ -63,21 +63,21 @@ const Products = () => {
       }).unwrap();
 
       toast("Muvaffaqiyatli!", {
-        description: "Yangi mahsulot muvaffaqiyatli qo'shildi.",
+        description: "Yangi mahsulot muvaffaqiyatli qo'shildi",
       });
 
       setIsSheetOpen(false);
     } catch (err: unknown) {
       const errorMessage =
-        err instanceof Error ? err.message : "Noma'lum xatolik yuz berdi.";
+        err instanceof Error ? err.message : "Noma'lum xatolik yuz berdi";
       toast("Xatolik yuz berdi", { description: errorMessage });
     }
   };
 
   const productInfo = [
     { title: "Jami mahsulotlar", count, icon: Package },
-    { title: "Bugungi sotuv", count: todaySales, icon: ShoppingBag },
-    { title: "Faol sotuvda", count: activeCount, icon: CircleCheckBig },
+    { title: "Bugungi sotuv", count: todaySales, icon: ShoppingBag},
+    { title: "Faol sotuvda", count: activeCount, icon: CircleCheckBig},
   ];
 
   return (
