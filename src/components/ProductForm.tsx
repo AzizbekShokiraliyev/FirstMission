@@ -33,7 +33,6 @@ const productSchema = z.object({
 
 export type ProductFormValues = z.infer<typeof productSchema>;
 
-// 2. Proplarni tiplashtiramiz
 interface ProductFormProps {
   initialData?: Product; 
   onSubmit: (data: ProductFormValues, status: string) => void;
@@ -59,7 +58,7 @@ export const ProductForm = ({ initialData, onSubmit, isLoading, title }: Product
     { title: "low-stock" }, 
     { title: "draft" }
   ];
-  
+
   return (
     <SheetContent className="bg-slate-900">
       <SheetHeader>

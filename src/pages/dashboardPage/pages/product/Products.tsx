@@ -3,13 +3,13 @@ import { CircleCheckBig, Package, ShoppingBag } from 'lucide-react';
 
 import Search from "./components/Search";
 import Filter from "./components/Filter";
-import AddProduct from "./components/AddProduct";
 import ProductList from "./components/ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
 import { setAllProducts } from "@/store/productSlice";
 import { useEffect } from "react";
 import { useGetProductsQuery } from "@/store/apiSlice";
+import { Button } from "@/components/ui/button";
 
 interface Product {
   id: string;
@@ -72,7 +72,9 @@ const Products = () => {
       <div className="flex items-center justify-between gap-3">
         <Search/>
         <Filter/>
-        <AddProduct/>
+        <Button>
+          Add Product
+        </Button>
       </div>
         <ProductList/>
     </div>

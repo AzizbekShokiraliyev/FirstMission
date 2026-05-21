@@ -14,7 +14,6 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 
-// ✅ Product interfeysi — id majburiy emas (add uchun), lekin edit uchun kerak
 export interface Product {
   id?: string;
   name: string;
@@ -31,7 +30,6 @@ const productSchema = z.object({
   price: z.string().min(1, { message: "Narxi majburiy" }),
 });
 
-// ✅ Export qilingan — ProductList da import qilinadi
 export type ProductFormValues = z.infer<typeof productSchema>;
 
 interface ProductFormProps {
@@ -60,7 +58,6 @@ export const ProductForm = ({
     defaultValues: {
       name: initialData?.name || "",
       description: initialData?.description || "",
-      // ✅ count va price har doim string'ga aylantiriladi
       count: initialData ? String(initialData.count) : "",
       price: initialData ? String(initialData.price) : "",
     },
@@ -88,7 +85,6 @@ export const ProductForm = ({
         className="flex h-[calc(100vh-120px)] flex-col justify-between py-6"
       >
         <div className="grid flex-1 auto-rows-min gap-5 overflow-y-auto px-4">
-          {/* Mahsulot nomi */}
           <div className="grid gap-2">
             <Label htmlFor="name" className="text-white">
               Mahsulot nomi
@@ -106,7 +102,6 @@ export const ProductForm = ({
             )}
           </div>
 
-          {/* Description */}
           <div className="grid gap-2">
             <Label htmlFor="description" className="text-white">
               Description
@@ -124,7 +119,6 @@ export const ProductForm = ({
             )}
           </div>
 
-          {/* Count */}
           <div className="grid gap-2">
             <Label htmlFor="count" className="text-white">
               Count
